@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: white;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      #businessAnalysis p,
+      #uiuxAnalysis p {
+        margin-top: 0;
+        margin-bottom: 0.5em; /* Adjust based on preferred spacing */
+      }
+
+      .made {
+        font-size: 14px;
+        margin-bottom: 2px;
+
+        font-weight: 400;
+        display: flex;
+        line-height: 17.64px;
+        justify-content: flex-end;
+      }
+      .analysis-box {
+        background: white;
+        border-radius: 8px;
+        padding: 20px 35px;
+        width: 714px;
+        margin-bottom: 24px;
+        border: 1px solid #ddd;
+        position: relative;
+      }
+      .know-more-btn {
+        font-family: Arial, sans-serif;
+        background: #ef7f17;
+        width: 150px;
+        height: 40px;
+        color: white;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 400;
+        font-size: medium;
+      }
+
+      .footer-text {
+        color: #ffffff;
+        margin-bottom: 5px;
+        font-weight: 400;
+        font-size: 20px;
+        height: 56px;
+        /* max-width: 370px; */
+        width: 600px;
+        line-height: 28px;
+        font-family: Arial, sans-serif;
+      }
+      .footer {
+        background: linear-gradient(90deg, #0e0701 0%, #331b05 100%);
+        height: 137px;
+        width: 720px;
+        margin-left: 17px;
+        margin-bottom: 7px;
+
+        /* margin: 24px auto; */
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        align-items: center;
+        /* padding: 0 24px; */
+        position: relative;
+      }
+
+      .analysis-box h2 {
+        color: #333;
+        font-size: 24px;
+        font-weight: 600;
+        width: 582px;
+
+        margin-bottom: 24px;
+      }
+      .analysis-content {
+        line-height: 1.8;
+        color: #333;
+        white-space: pre-wrap;
+        font-weight: 400;
+        font-size: 16px;
+        padding-right: 20px;
+      }
+
+      .container {
+        display: flex;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        flex-direction: column; /* Stack header and panels vertically */
+      }
+
+      .header {
+        gap: 10px;
+        margin-bottom: 20px;
+        padding: 13px;
+      }
+
+      .logo {
+        margin-bottom: 4px;
+
+        width: 38.97px;
+        height: 32px;
+      }
+
+      .title {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 4px;
+
+        color: #333;
+      }
+
+      .subtitle {
+        font-size: 20px;
+        color: #666;
+        width: 355px;
+        height: 25px;
+      }
+
+      .panels {
+        display: flex; /* Flex the left and right panels */
+        gap: 20px;
+        flex: 1; /* Allow it to take up remaining space */
+      }
+
+      .left-panel {
+        flex: 1; /* Make left panel take available space */
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+      }
+      .contain {
+        display: flex;
+      }
+
+      .right-panel {
+        width: 520px;
+        height: 916px; /* Set fixed height */
+        background: #d9d9d9;
+
+        padding: 20px;
+        text-align: center;
+        overflow-y: auto; /* Enable vertical scrolling */
+
+        position: sticky;
+        top: 0;
+      }
+      .power {
+        margin-bottom: 20px;
+        padding: 13px;
+      }
+      .screenshot-preview {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .textarea {
+        width: 100%;
+        height: 300px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: none;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .nav {
+        display: flex;
+        justify-content: space-around;
+
+        align-items: flex-end;
+      }
+
+      .copy-button {
+        position: absolute;
+        top: 10px;
+        padding: 5px;
+        right: 10px;
+        height: 37px;
+        line-height: 20.16px;
+        /* padding: 5px 10px; */
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 165px;
+        margin-top: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+      }
+
+      .copy-button:hover {
+        background: #e5e5e5;
+      }
+
+      .credits {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .credits a {
+        color: #666;
+        text-decoration: none;
+      }
+
+      .credits a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="contain">
+        <div>
+          <div class="nav">
+            <div class="header">
+              <img src="logo.png" alt="Logo" class="logo" />
+              <div>
+                <div class="title">UI UX Checker</div>
+                <div class="subtitle">Real Time Design Analyser for Chrome</div>
+              </div>
+            </div>
+            <div class="power">
+              <p class="made">Made with ❤️ at kuberanix</p>
+              <p class="made">Powered by GPT-4o</p>
+            </div>
+          </div>
+
+          <!-- <div class="panels"> -->
+          <!-- Added a new wrapper for the panels -->
+          <div class="left-panel">
+            <div style="position: relative">
+              <!-- <textarea
+              class="textarea"
+              placeholder="Show the report here in MarkDown Text"
+            ></textarea> -->
+              <div class="analysis-box">
+                <h2>Business Goals and Content Analysis</h2>
+                <div id="businessAnalysis" class="analysis-content"></div>
+              </div>
+
+              <div class="analysis-box">
+                <h2>UI/UX Analysis and Optimizations</h2>
+                <div id="uiuxAnalysis" class="analysis-content"></div>
+              </div>
+              <button class="copy-button">Copy to clipboard</button>
+            </div>
+          </div>
+          <div class="footer">
+            <p class="footer-text">
+              Suggestions made sense? Let our super fast and affordable team
+              help you with a revamped design based on this analysis!
+            </p>
+            <a
+              href="https://kuberanix.com/"
+              target="_blank"
+              class="know-more-btn"
+              >Know More</a
+            >
+          </div>
+        </div>
+        <div class="right-side">
+          <div class="right-panel">
+            <div class="screenshot-container">
+              <img
+                id="screenshotPreview"
+                class="screenshot-preview"
+                alt="Website Screenshot"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+
+    <script src="/lib/marked.min.js"></script>
+    <script src="report.js"></script>
+  </body>
+</html>
