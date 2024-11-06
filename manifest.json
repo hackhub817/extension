@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "UI/UX Analyzer extension",
+  "name": "UI UX Analyzer chrome extension",
   "version": "1.0",
   "description": "Analyzes website UI/UX and generates HTML reports",
   "permissions": [
@@ -25,14 +25,11 @@
     }
   ],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": "startinglogo.png"
   },
+  "icons": { "128": "startinglogo.png" },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
-  },
-  "icons": {
-    "16": "logo/startlogo.jpg",
-    "48": "logo/startlogo.jpg",
-    "128": "logo/startlogo.jpg"
   }
 }
