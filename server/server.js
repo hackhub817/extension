@@ -2,7 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-const { analyzeContent } = require("./controllers/analyzeController");
+const {
+  analyzeContent,
+  captureScreenshot,
+} = require("./controllers/analyzeController");
 
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, ".env") });
@@ -30,6 +33,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 app.post("/api/analyze", analyzeContent);
+app.post("/api/screenshot", captureScreenshot);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
@@ -38,4 +42,3 @@ console.log("Environment variables:", {
   OPENAI_API_KEY: process.env.OPENAI_API_KEY ? "Present" : "Missing",
   PORT: process.env.PORT,
 });
-app;

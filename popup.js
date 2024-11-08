@@ -63,60 +63,82 @@ async function captureScreenshot() {
       currentWindow: true,
     });
 
-    if (!tab) {
+    if (!tab || !tab.url) {
       throw new Error("No active tab found");
     }
 
-    // First inject html2canvas
-    await chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      files: ["lib/html2canvas.min.js"],
-    });
+    // // First inject html2canvas
+    // await chrome.scripting.executeScript({
+    //   target: { tabId: tab.id },
+    //   files: ["lib/html2canvas.min.js"],
+    // });
 
-    // Execute the screenshot capture
-    const result = await chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      function: () => {
-        return new Promise((resolve, reject) => {
-          if (typeof html2canvas === "undefined") {
-            reject("html2canvas not found");
-            return;
-          }
+    // // Execute the screenshot capture
+    // const result = await chrome.scripting.executeScript({
+    //   target: { tabId: tab.id },
+    //   function: () => {
+    //     return new Promise((resolve, reject) => {
+    //       if (typeof html2canvas === "undefined") {
+    //         reject("html2canvas not found");
+    //         return;
+    //       }
 
-          const element = document.documentElement;
-          const options = {
-            scale: 1,
-            logging: true,
-            useCORS: true,
-            allowTaint: true,
-            foreignObjectRendering: true,
-            removeContainer: true,
-            backgroundColor: "#ffffff",
-            scrollX: 0,
-            scrollY: -window.scrollY,
-          };
+    //       const element = document.documentElement;
+    //       const options = {
+    //         scale: 1,
+    //         logging: true,
+    //         useCORS: true,
+    //         allowTaint: true,
+    //         foreignObjectRendering: true,
+    //         removeContainer: true,
+    //         backgroundColor: "#ffffff",
+    //         scrollX: 0,
+    //         scrollY: -window.scrollY,
+    //       };
 
-          html2canvas(element, options)
-            .then((canvas) => {
-              try {
-                const dataUrl = canvas.toDataURL("image/png");
-                resolve(dataUrl);
-              } catch (err) {
-                reject("Failed to convert canvas to data URL: " + err);
-              }
-            })
-            .catch((err) => {
-              reject("html2canvas failed: " + err);
-            });
-        });
+    //       html2canvas(element, options)
+    //         .then((canvas) => {
+    //           try {
+    //             const dataUrl = canvas.toDataURL("image/png");
+    //             resolve(dataUrl);
+    //           } catch (err) {
+    //             reject("Failed to convert canvas to data URL: " + err);
+    //           }
+    //         })
+    //         .catch((err) => {
+    //           reject("html2canvas failed: " + err);
+    //         });
+    //     });
+    //   },
+    // });
+
+    // if (!result || !result[0]) {
+    //   throw new Error("Screenshot capture failed - no result");
+    // }
+
+    const serverUrl = "http://localhost:4000/api/screenshot";
+    console.log("Sending request to:", serverUrl);
+
+    const response = await fetch(serverUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ url: tab.url }),
     });
 
-    if (!result || !result[0]) {
-      throw new Error("Screenshot capture failed - no result");
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Screenshot failed: ${errorText}`);
     }
 
-    screenshot = result[0].result;
+    const data = await response.json();
+    console.log("Screenshot data received");
+    screenshot = `data:image/png;base64,${data.screenshot}`;
+    // Store the screenshot
+
     if (!screenshot) {
       throw new Error("Screenshot data is empty");
     }
@@ -136,18 +158,16 @@ async function captureScreenshot() {
 async function analyzeWebsite(screenshot) {
   try {
     updateUIState("analyzing");
+    console.log("scren", screenshot);
 
-    const response = await fetch(
-      "https://chrome-extension-analyser.onrender.com/api/analyze",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ screenshot }),
-      }
-    );
+    const response = await fetch("http://localhost:4000/api/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ screenshot }),
+    });
 
     const data = await response.json();
 
